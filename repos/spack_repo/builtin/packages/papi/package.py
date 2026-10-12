@@ -71,10 +71,10 @@ class Papi(AutotoolsPackage, ROCmPackage):
     # The PAPI configure option "--with-shlib-tools" is deprecated
     # and therefore not implemented here
 
-    variant("disable_cpu", default=False, when="@7.2:", description="Disable the CPU components")
-    variant("disable_perf_event", default=False, when="@7.2:", description="Disable the perf_event component")
+    variant("disable_cpu", default=False, when="@7.2:", description="Disable the CPU components (i.e. perf_event, perf_event_uncore, and sysdetect)")
+    variant("disable_perf_event", default=False, when="@7.2:", description="Disable the perf_event component (Consequently disables perf_event_uncore and sysdetect)")
     variant("disable_perf_event_uncore", default=False, when="@7.2:", description="Disable the perf_event_uncore component")
-    variant("with_sysdetect", default="none", when="@7.2:", values=("no", "yes"), multi=False, description="Build the sysdetect component, the default is yes")
+    variant("disable_sysdetect", default=False, when="@master", description="Disable the sysdetect component")
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
@@ -202,8 +202,8 @@ class Papi(AutotoolsPackage, ROCmPackage):
         if "+disable_perf_event_uncore" in spec:
             options.append("--disable-perf-event-uncore")
 
-        if spec.variants["with_sysdetect"].value != "none":
-            options.append("--with-sysdetect={0}".format(spec.variants["with_sysdetect"].value))
+        if "+disable_sysdetect" in spec:
+            options.append("--disable-sysdetect")
 
         if self.run_tests:
             options.append("--with-tests=ctests")
