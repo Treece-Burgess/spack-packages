@@ -71,10 +71,30 @@ class Papi(AutotoolsPackage, ROCmPackage):
     # The PAPI configure option "--with-shlib-tools" is deprecated
     # and therefore not implemented here
 
-    variant("disable_cpu", default=False, when="@7.2:", description="Disable the CPU components (i.e. perf_event, perf_event_uncore, and sysdetect)")
-    variant("disable_perf_event", default=False, when="@7.2:", description="Disable the perf_event component (Consequently disables perf_event_uncore and sysdetect)")
-    variant("disable_perf_event_uncore", default=False, when="@7.2:", description="Disable the perf_event_uncore component")
-    variant("disable_sysdetect", default=False, when="@master", description="Disable the sysdetect component")
+    variant(
+        "disable_cpu",
+        default=False,
+        when="@7.2:",
+        description="Disable the CPU components (i.e. perf_event, perf_event_uncore, and sysdetect)",
+    )
+    variant(
+        "disable_perf_event",
+        default=False,
+        when="@7.2:",
+        description="Disable the perf_event component (Consequently disables perf_event_uncore and sysdetect)",
+    )
+    variant(
+        "disable_perf_event_uncore",
+        default=False,
+        when="@7.2:",
+        description="Disable the perf_event_uncore component",
+    )
+    variant(
+        "disable_sysdetect",
+        default=False,
+        when="@master",
+        description="Disable the sysdetect component",
+    )
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
